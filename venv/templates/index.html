@@ -1,129 +1,78 @@
-<h1>Hello info vis app</h1>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+</head>
 
-{% for country in data_obj %}
-
-
-    <div id={{ country[0] }}>
-        <h3>{{ country[0] }}</h3>
-        <table>
-            <tr>
-                <th>Sex</th><th>harm</th><th>fair</th><th>ingroup</th><th>auth</th><th>purity</th>
-            </tr>
-            <tr>
-                <td>female</td>
-                <td id={{ country[0] + "-f-harm" }}>{{ country[1].loc["female", "harm"] }}</td>
-                <td id={{ country[0] + "-f-fair" }}>{{ country[1].loc["female", "fair"] }}</td>
-                <td id={{ country[0] + "-f-ingroup" }}>{{ country[1].loc["female", "ingroup"] }}</td>
-                <td id={{ country[0] + "-f-auth" }}>{{ country[1].loc["female", "auth"] }}</td>
-                <td id={{ country[0] + "-f-purity" }}>{{ country[1].loc["female", "purity"] }}</td>
-            </tr>
-            <tr>
-                <td>male</td>
-                <td id={{ country[0] + "-m-harm" }}>{{ country[1].loc["male", "harm"] }}</td>
-                <td id={{ country[0] + "-m-fair" }}>{{ country[1].loc["male", "fair"] }}</td>
-                <td id={{ country[0] + "-m-ingroup" }}>{{ country[1].loc["male", "ingroup"] }}</td>
-                <td id={{ country[0] + "-m-auth" }}>{{ country[1].loc["male", "auth"] }}</td>
-                <td id={{ country[0] + "-m-purity" }}>{{ country[1].loc["male", "purity"] }}</td>
-            </tr>
-        </table>
-
-
-        
-        <div id={{country[0] + "-f-glyph"}} style="display:grid;grid-template-rows:50% 1fr; grid-template-columns:50% 1fr;height:300px;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark text-light">
+        <div class="container">
+            <h1>Data Dawgz</h1>
         </div>
-            
         
-        <div id={{country[0] + "-m-glyph"}} style="display:grid;grid-template-rows:50% 1fr; grid-template-columns:50% 1fr;height:300px;">
+    </nav>
+
+    <div class="container"></div>
+    <div class="jumbotron">
+        <div class="container">
+            <h2>About:</h2>
+            <ul>
+                <li>The dataset</li>
+                <li>
+                    z-standardized measures
+                </li>
+            </ul>
+           
         </div>
+    </div>
+    
+    {% for country in data_obj %}
+    
+    
+        <div class="container" id={{ country[0] }}>
+            <h2>{{ country[0] }}</h2>
+            <div class="container">
+                <h4>Stats:</h4>
+                <table>
+                    <tr>
+                        <th>Sex</th><th>harm</th><th>fair</th><th>ingroup</th><th>auth</th><th>purity</th>
+                    </tr>
+                    <tr>
+                        <td>female</td>
+                        <td id={{ country[0] + "-f-harm" }}>{{ country[1].loc["female", "harm"] }}</td>
+                        <td id={{ country[0] + "-f-fair" }}>{{ country[1].loc["female", "fair"] }}</td>
+                        <td id={{ country[0] + "-f-ingroup" }}>{{ country[1].loc["female", "ingroup"] }}</td>
+                        <td id={{ country[0] + "-f-auth" }}>{{ country[1].loc["female", "auth"] }}</td>
+                        <td id={{ country[0] + "-f-purity" }}>{{ country[1].loc["female", "purity"] }}</td>
+                    </tr>
+                    <tr>
+                        <td>male</td>
+                        <td id={{ country[0] + "-m-harm" }}>{{ country[1].loc["male", "harm"] }}</td>
+                        <td id={{ country[0] + "-m-fair" }}>{{ country[1].loc["male", "fair"] }}</td>
+                        <td id={{ country[0] + "-m-ingroup" }}>{{ country[1].loc["male", "ingroup"] }}</td>
+                        <td id={{ country[0] + "-m-auth" }}>{{ country[1].loc["male", "auth"] }}</td>
+                        <td id={{ country[0] + "-m-purity" }}>{{ country[1].loc["male", "purity"] }}</td>
+                    </tr>
+                </table>
+            </div>
             
+    
+    
+            <div class="d-flex">
+                <div class="card container m-2" id={{country[0] + "-f-glyph"}} style="display:grid;grid-template-rows:50% 1fr; grid-template-columns:50% 1fr;height:300px;">
+                    <h3>Female:</h3>
+                </div>
+                    
+                
+                <div class="card container m-2" id={{country[0] + "-m-glyph"}} style="display:grid;grid-template-rows:50% 1fr; grid-template-columns:50% 1fr;height:300px;">
+                    <h3>Male:</h3>
+                </div>
+            </div>
+            
+                
+        
+        </div>
+    
+    {% endfor %}
     
     </div>
 
-{% endfor %}
-
-<script>
-    petalPath = "M 0,0, C 60,20 60,60 80,80 C 100,60 100,20 0,0" 
-    centerPath = "M 0,20 C -20,20 -20,-20 0,-20 C 20,-20 20,20, 0,20"
-
-
-    function gen_html (harm, fair, auth, ingroup, purity) {
-        var colorOptions = ["red", "green", "yellow", "blue", "orange", "green"]
-        var petInject = ``
-        var numPetals = 3 * (auth + 5)
-        var degreeIncr = 360/numPetals
-        var color = colorOptions[Math.floor(purity + 10) % 6]
-        var scale = (15 + harm)*.08
-        var center_color = colorOptions[Math.floor(ingroup + 10) % 6]
-        
-        console.log("PETAL COLOR", color)
-        var center_scale = fair/2 + 1
-        var degreeAcc = 0
-        for (var i = 0; i < numPetals; i++){
-            petInject = petInject + `<svg style="grid-area:2/2;overflow:visible;" ><path fill="${color}" d="${petalPath}" transform="rotate(${degreeAcc}), scale(${scale})"> </svg>` + "\n";
-            degreeAcc = degreeAcc + degreeIncr;
-        }
-        petInject = petInject + `<svg style="grid-area:2/2;overflow:visible;" ><path fill="${center_color}" d="${centerPath}" transform="scale(${center_scale})"></svg>`
-        return petInject;
-    }
-
-    function draw_flowers(){
-        countries = ["Russia", "US", "Australia", "Spain", "Iran"]
-        for (var i = 0; i < countries.length; i++) {
-            
-            var glyphF = document.getElementById(`${countries[i]}-f-glyph`);
-            var glyphM = document.getElementById(`${countries[i]}-m-glyph`);
-            
-
-            var f_data = {
-                "harm": Number(document.getElementById(`${countries[i]}-f-harm`).innerText),
-                "fair": Number(document.getElementById(`${countries[i]}-f-fair`).innerText),
-                "auth": Number(document.getElementById(`${countries[i]}-f-auth`).innerText),
-                "ingroup": Number(document.getElementById(`${countries[i]}-f-ingroup`).innerText),
-                "purity": Number(document.getElementById(`${countries[i]}-f-purity`).innerText)
-            }
-            var m_data = {
-                "harm": Number(document.getElementById(`${countries[i]}-m-harm`).innerText),
-                "fair": Number(document.getElementById(`${countries[i]}-m-fair`).innerText),
-                "auth": Number(document.getElementById(`${countries[i]}-m-auth`).innerText),
-                "ingroup": Number(document.getElementById(`${countries[i]}-m-ingroup`).innerText),
-                "purity": Number(document.getElementById(`${countries[i]}-m-purity`).innerText)
-            }
-            console.log(countries[i])
-            glyphF.innerHTML += gen_html(f_data.harm, f_data.fair, f_data.auth, f_data.ingroup, f_data.purity);
-            glyphM.innerHTML += gen_html(m_data.harm, m_data.fair, m_data.auth, m_data.ingroup, m_data.purity);
-        }
-    }    
-
-
-    draw_flowers();
-
-    // const russiaGlyphF = document.getElementById("Russia-f-glyph")
-    // const russiaGlyphM = document.getElementById("Russia-m-glyph")
-    // console.log(russiaGlyphF)
-    // console.log(russiaGlyphM)
-    // const russia_dataf = {
-    //     "harm": Number(document.getElementById("Russia-f-harm").innerText),
-    //     "fair": Number(document.getElementById("Russia-f-fair").innerText),
-    //     "auth": Number(document.getElementById("Russia-f-auth").innerText),
-    //     "ingroup": Number(document.getElementById("Russia-f-ingroup").innerText),
-    //     "purity": Number(document.getElementById("Russia-f-purity").innerText)
-    // }
-
-    // const russia_datam = {
-    //     "harm": Number(document.getElementById("Russia-m-harm").innerText),
-    //     "fair": Number(document.getElementById("Russia-m-fair").innerText),
-    //     "auth": Number(document.getElementById("Russia-m-auth").innerText),
-    //     "ingroup": Number(document.getElementById("Russia-m-ingroup").innerText),
-    //     "purity": Number(document.getElementById("Russia-m-purity").innerText)
-    // }
-    // console.log(russia_dataf)
-    // russiaGlyphF.innerHTML += gen_html(russia_dataf.harm, russia_dataf.fair, russia_dataf.auth, russia_dataf.ingroup,
-    //                                     russia_dataf.purity)
-    
-    // russiaGlyphM.innerHTML += gen_html(russia_datam.harm, russia_datam.fair, russia_datam.auth, russia_datam.ingroup,
-    //                                     russia_datam.purity)
-    
-    
-        
-</script>
+<script src="../static/draw.js"></script>
 

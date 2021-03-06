@@ -17,5 +17,7 @@ def pre_proc_data():
     au_sc = scaled_grouped_df.loc["Australia"]
     sp_sc = scaled_grouped_df.loc["Spain"]
     ir_sc = scaled_grouped_df.loc["Iran"]
-    overview_data = [("Russia",ru_sc), ("US",us_sc), ("Australia",au_sc), ("Spain",sp_sc), ("Iran",ir_sc)]
+    sw_sc = scaled_grouped_df.loc["Sweden"]
+    mn_sc = scaled_grouped_df.loc["Mongolia"]
+    overview_data = [("Russia",ru_sc), ("Mongolia", mn_sc), ("Sweden", sw_sc), ("US",us_sc), ("Australia",au_sc), ("Spain",sp_sc), ("Iran",ir_sc)]
     return overview_data
