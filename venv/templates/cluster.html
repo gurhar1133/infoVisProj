@@ -1,0 +1,57 @@
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+</head>
+<style>
+    a{
+        text-decoration: none;
+    }
+    .stats-table{
+        display:none;
+    }
+    .dawg:hover{
+       cursor:pointer;
+        background: lightcyan;
+    }
+
+    @keyframes fillout{
+    from {
+        transform: scaleX(0);
+        
+    }
+    to{
+        transform: scaleX(1);
+        
+    }
+}
+    h4:hover{
+        cursor: pointer;
+        color: lightblue;
+    }
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-dark text-light">
+    <div class="container">
+        <a href="/"><h1>Data Dogs</h1></a>
+        <a href="/compare"><h4>compare</h4></a>
+        <h4>cluster</h4>
+    </div>
+</nav>
+
+<div class="container">
+    <h3>Hello cluster</h3>
+
+    <form action="/cluster" method="POST">
+        <h5>Select k clusters: </h5>
+        <select name="clusters" id="clusters" onchange="">
+            <option value="none"> --- </option>
+            {% for i in range(10) %}
+                
+                <option value="{{ i }}">{{ i }}</option>
+                
+
+            {% endfor %}
+
+        </select>
+        
+        <input class="btn btn-dark" type="submit" value="Cluster">
+</div>

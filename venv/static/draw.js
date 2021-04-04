@@ -1,9 +1,9 @@
 function gen_html (harm, fair, auth, ingroup, purity, sex) {
-    const widthVar = purity;
-    const heightVar = 5 + 2*fair;
+    const widthVar = 1.5*purity;
+    const heightVar = 5 + 2.5*fair;
     const earHieght = ingroup == 0 ? 7 : 8*(ingroup);
 
-    const happiness = -3*auth;
+    const happiness = -2.5*auth;
     const harmvar = harm;
     if (sex == "f"){sex = "pink"}else{sex="blue"}
 
@@ -74,13 +74,13 @@ function gen_html (harm, fair, auth, ingroup, purity, sex) {
 }
 
 function draw_glyphs(){
-    countries = ["Russia", "Sweden", "Mongolia", "US", "Australia", "Spain", "Iran"]
+    countries = ['Australia', 'Belgium', 'China', 'France', 'Hungary', 'Iran', 'Japan', 'Korea', 'Latvia', 'Mongolia', 'Netherlands', 'Poland', 'Russia', 'Serbia', 'Spain', 'Sweden', 'Turkey', 'UK', 'US']
+    //countries = ["Russia", "Sweden", "Mongolia", "US", "Australia", "Spain", "Iran"]
     for (var i = 0; i < countries.length; i++) {
         
         var glyphF = document.getElementById(`${countries[i]}-f-glyph`);
         var glyphM = document.getElementById(`${countries[i]}-m-glyph`);
         
-
         var f_data = {
             "harm": Number(document.getElementById(`${countries[i]}-f-harm`).innerText),
             "fair": Number(document.getElementById(`${countries[i]}-f-fair`).innerText),
@@ -99,8 +99,34 @@ function draw_glyphs(){
         glyphF.innerHTML += gen_html(f_data.harm, f_data.fair, f_data.auth, f_data.ingroup, f_data.purity,"f");
         glyphM.innerHTML += gen_html(m_data.harm, m_data.fair, m_data.auth, m_data.ingroup, m_data.purity,"m");
     }
-}    
+}  
+
+function draw_selection(countries){
+    for (var i = 0; i < countries.length; i++) {
+        
+        var glyphF = document.getElementById(`${countries[i]}-f-glyph`);
+        var glyphM = document.getElementById(`${countries[i]}-m-glyph`);
+        
+        var f_data = {
+            "harm": Number(document.getElementById(`${countries[i]}-f-harm`).innerText),
+            "fair": Number(document.getElementById(`${countries[i]}-f-fair`).innerText),
+            "auth": Number(document.getElementById(`${countries[i]}-f-auth`).innerText),
+            "ingroup": Number(document.getElementById(`${countries[i]}-f-ingroup`).innerText),
+            "purity": Number(document.getElementById(`${countries[i]}-f-purity`).innerText)
+        }
+        var m_data = {
+            "harm": Number(document.getElementById(`${countries[i]}-m-harm`).innerText),
+            "fair": Number(document.getElementById(`${countries[i]}-m-fair`).innerText),
+            "auth": Number(document.getElementById(`${countries[i]}-m-auth`).innerText),
+            "ingroup": Number(document.getElementById(`${countries[i]}-m-ingroup`).innerText),
+            "purity": Number(document.getElementById(`${countries[i]}-m-purity`).innerText)
+        }
+        console.log(countries[i])
+        glyphF.innerHTML += gen_html(f_data.harm, f_data.fair, f_data.auth, f_data.ingroup, f_data.purity,"f");
+        glyphM.innerHTML += gen_html(m_data.harm, m_data.fair, m_data.auth, m_data.ingroup, m_data.purity,"m");
+    }
+}
 
 
-draw_glyphs();
+//draw_glyphs();
 
