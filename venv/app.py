@@ -8,7 +8,17 @@ app = Flask(__name__)
 
 ## TODO: ADD ABOUT ENCODING PAGE
 
-## TODO: INCORPORATE CLUSTERING FUNCTIONS
+## TODO: ADD KEY TO CLUSTER PAGE
+
+## TODO: COMPARE PAGE CLICK POPUPS
+
+## TODO: CLUSTER PAGE CLICK POPUPS
+
+## TODO: SLYLING UPDATES
+
+## TODO: MAKE SURE SEX ENCODING IS CORRECT IN CLUSTER PAGE AND BIN IT IN TABLE
+
+## TODO: CONSISTENCY IN NORMALIZATION FOR CLUSTERS AND OVERVIEW??
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
@@ -18,18 +28,17 @@ def index():
     if request.method == 'GET':
         return render_template("index.html", data_obj=data_obj)
 
-## TODO: write clustering route
 @app.route("/cluster", methods=["GET", "POST"])
 def cluster(k=None):
     if request.method == "POST":
-        clusters = int(request.form['clusters'])
-        print(cluster_by_elem(clusters))
-        return render_template('cluster.html', k=request.form['clusters'])
+        kclusters = int(request.form['clusters'])
+        clusts = cluster_by_elem(kclusters) 
+        print(clusts)
+        return render_template('cluster.html', k=request.form['clusters'], clusters=clusts, str=str, int=int)
     else:
         return render_template("cluster.html", k=0)
 
 
-## TODO: write a compare route
 @app.route("/compare", methods=['GET', 'POST'])
 def compare(data=None):
     data_obj = pre_proc_data()

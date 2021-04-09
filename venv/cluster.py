@@ -14,15 +14,21 @@ def cluster_by_elem(n):
     for i in range(n):
         cluster_df = df_clustrd[df_clustrd.Cluster == i]
         countries = cluster_df.country.unique()
-        counts = [cluster_df.country[cluster_df.country == country].count() for country in countries]
+        counts = [cluster_df.country[cluster_df.country == country].count()/(df.country[df.country == country].count()) for country in countries]
         mode_country = list(zip(*sorted(zip(countries, counts), key=(lambda x: x[1]), reverse=True)))[0][:4]
         cluster_df = cluster_df.mean()
         cluster_df['top_countries'] = mode_country
+        cluster_df['harm'] = round(cluster_df['harm'], 3)
+        cluster_df['fair'] = round(cluster_df['fair'], 3)
+        cluster_df['auth'] = round(cluster_df['auth'], 3)
+        cluster_df['purity'] = round(cluster_df['purity'], 3)
+        cluster_df['ingroup'] = round(cluster_df['ingroup'], 3)
+        cluster_df['sex'] = round(cluster_df['sex'], 3)
         clusters.append(cluster_df)
 
     return clusters
 
 if __name__ == '__main__':
-    print(cluster_by_elem(3))
+    print(cluster_by_elem(4))
 
 
