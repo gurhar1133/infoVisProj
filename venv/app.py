@@ -6,19 +6,23 @@ app = Flask(__name__)
 
 ## TODO: ADD KEY TO OVERVIEW
 
+## TODO: ADD A README
+
 ## TODO: ADD ABOUT ENCODING PAGE
 
 ## TODO: ADD KEY TO CLUSTER PAGE
 
-## TODO: COMPARE PAGE CLICK POPUPS
-
-## TODO: CLUSTER PAGE CLICK POPUPS
+## TODO: Cluster page side by side cluster summary popups
 
 ## TODO: SLYLING UPDATES
 
-## TODO: MAKE SURE SEX ENCODING IS CORRECT IN CLUSTER PAGE AND BIN IT IN TABLE
+## TODO: MAKE SURE SEX ENCODING IS CORRECT IN CLUSTER PAGE
 
-## TODO: CONSISTENCY IN NORMALIZATION FOR CLUSTERS AND OVERVIEW??
+def bin_sex(sex):
+    if sex < 0:
+        return "Female dominant"
+    else:
+        return "Male dominant"
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
@@ -34,7 +38,7 @@ def cluster(k=None):
         kclusters = int(request.form['clusters'])
         clusts = cluster_by_elem(kclusters) 
         print(clusts)
-        return render_template('cluster.html', k=request.form['clusters'], clusters=clusts, str=str, int=int)
+        return render_template('cluster.html', k=request.form['clusters'], clusters=clusts, str=str, int=int, bin_sex=bin_sex)
     else:
         return render_template("cluster.html", k=0)
 

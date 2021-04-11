@@ -83,7 +83,8 @@
                         <td id={{ str(cluster['Cluster']) + "-ingroup" }}>{{ cluster['ingroup'] }}</td>
                         <td id={{ str(cluster['Cluster']) + "-auth" }}>{{ cluster['auth']}}</td>
                         <td id={{ str(cluster['Cluster']) + "-purity" }}>{{ cluster['purity'] }}</td>
-                        <td id={{ str(cluster['Cluster']) + "-sex" }}>{{ cluster['sex'] }}</td>
+                        <td id={{ str(cluster['Cluster']) + "sex" }}>{{ bin_sex(cluster['sex']) }}</td>
+                        <td style="display: none;" id={{ str(cluster['Cluster']) + "-sex" }}>{{ cluster['sex'] }}</td>
                     </tr>
                 </table> 
             </div>

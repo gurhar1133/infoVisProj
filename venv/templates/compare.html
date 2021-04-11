@@ -6,7 +6,8 @@
         text-decoration: none;
     }
     .stats-table{
-        display:none;
+        display: flex;
+        justify-content: space-evenly;
     }
     .dawg:hover{
        cursor:pointer;
@@ -25,7 +26,6 @@
 }
     h4:hover{
         cursor: pointer;
-        color: lightblue;
     }
 </style>
 
@@ -75,36 +75,51 @@
        
     <!-- {% endif %} -->
 </div>
+
+<div class="container stats-table">
+{% for country in data_obj %}
+    {% if country[0] in data %}
+
+
+    <div class="card">
+        <table>
+            <tr>
+                <th><h4>Stats for {{ country[0] }}:</h4></th>
+            </tr>
+            <tr>
+                <th>Sex</th><th>harm</th><th>fair</th><th>ingroup</th><th>auth</th><th>purity</th>
+            </tr>
+            <tr>
+                <td>female</td>
+                <td id={{ country[0] + "-f-harm" }}>{{ country[1].loc["female", "harm"] }}</td>
+                <td id={{ country[0] + "-f-fair" }}>{{ country[1].loc["female", "fair"] }}</td>
+                <td id={{ country[0] + "-f-ingroup" }}>{{ country[1].loc["female", "ingroup"] }}</td>
+                <td id={{ country[0] + "-f-auth" }}>{{ country[1].loc["female", "auth"] }}</td>
+                <td id={{ country[0] + "-f-purity" }}>{{ country[1].loc["female", "purity"] }}</td>
+            </tr>
+            <tr>
+                <td>male</td>
+                <td id={{ country[0] + "-m-harm" }}>{{ country[1].loc["male", "harm"] }}</td>
+                <td id={{ country[0] + "-m-fair" }}>{{ country[1].loc["male", "fair"] }}</td>
+                <td id={{ country[0] + "-m-ingroup" }}>{{ country[1].loc["male", "ingroup"] }}</td>
+                <td id={{ country[0] + "-m-auth" }}>{{ country[1].loc["male", "auth"] }}</td>
+                <td id={{ country[0] + "-m-purity" }}>{{ country[1].loc["male", "purity"] }}</td>
+            </tr>
+        </table> 
+    </div>
+    
+
+
+{% endif %}
+{% endfor %}
+</div>
+
 {% for country in data_obj %}
     {% if country[0] in data %}
         
  
     <div class="container" id={{ country[0] }}>
         <h2>{{ country[0] }}</h2>
-        <div class="container stats-table">
-            <h4>Stats for {{ country[0] }}:</h4>
-            <table>
-                <tr>
-                    <th>Sex</th><th>harm</th><th>fair</th><th>ingroup</th><th>auth</th><th>purity</th>
-                </tr>
-                <tr>
-                    <td>female</td>
-                    <td id={{ country[0] + "-f-harm" }}>{{ country[1].loc["female", "harm"] }}</td>
-                    <td id={{ country[0] + "-f-fair" }}>{{ country[1].loc["female", "fair"] }}</td>
-                    <td id={{ country[0] + "-f-ingroup" }}>{{ country[1].loc["female", "ingroup"] }}</td>
-                    <td id={{ country[0] + "-f-auth" }}>{{ country[1].loc["female", "auth"] }}</td>
-                    <td id={{ country[0] + "-f-purity" }}>{{ country[1].loc["female", "purity"] }}</td>
-                </tr>
-                <tr>
-                    <td>male</td>
-                    <td id={{ country[0] + "-m-harm" }}>{{ country[1].loc["male", "harm"] }}</td>
-                    <td id={{ country[0] + "-m-fair" }}>{{ country[1].loc["male", "fair"] }}</td>
-                    <td id={{ country[0] + "-m-ingroup" }}>{{ country[1].loc["male", "ingroup"] }}</td>
-                    <td id={{ country[0] + "-m-auth" }}>{{ country[1].loc["male", "auth"] }}</td>
-                    <td id={{ country[0] + "-m-purity" }}>{{ country[1].loc["male", "purity"] }}</td>
-                </tr>
-            </table> 
-        </div>
         
     
     
@@ -133,9 +148,31 @@
 
 
 <script>
-    selections = [document.getElementById("a").textContent, document.getElementById("b").textContent];
+selections = [document.getElementById("a").textContent, document.getElementById("b").textContent];
 
-    function gen_html (harm, fair, auth, ingroup, purity, sex) {
+// function show_stats(country){
+//     clear_popups();
+//     console.log(country.children[1]);
+//     nodeContent = country.children[1].innerHTML;
+//     newnode = document.createElement('div');
+//     newnode.classList.add('card');
+//     newnode.classList.add('popup');
+//     newnode.innerHTML += "<p onclick='clear_popups()' style='text-align:right;cursor:pointer; margin:0px; padding: 0px;'>x<p>"
+//     newnode.innerHTML += nodeContent;
+//     newnode.style = 'padding: 20px; position: fixed; top: 10%; left: 30%; display: inline; background: white;';
+//     document.body.appendChild(newnode);
+//     newnode.style.animation = 'fillout .2s linear';
+// }
+
+// function clear_popups(){
+//     if (document.body.getElementsByClassName('popup')[0] != null){
+//         popup = document.body.getElementsByClassName('popup');
+//         // console.log(popup[0]);
+//         document.body.removeChild(popup[0]);
+//     }
+// }
+
+function gen_html (harm, fair, auth, ingroup, purity, sex) {
     const widthVar = 1.5*purity;
     const heightVar = 5 + 2.5*fair;
     const earHieght = ingroup == 0 ? 7 : 8*(ingroup);

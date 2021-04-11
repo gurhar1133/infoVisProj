@@ -18,11 +18,14 @@ def cluster_by_elem(n):
         mode_country = list(zip(*sorted(zip(countries, counts), key=(lambda x: x[1]), reverse=True)))[0][:4]
         cluster_df = cluster_df.mean()
         cluster_df['top_countries'] = mode_country
-        cluster_df['harm'] = round(cluster_df['harm'], 3)
-        cluster_df['fair'] = round(cluster_df['fair'], 3)
-        cluster_df['auth'] = round(cluster_df['auth'], 3)
-        cluster_df['purity'] = round(cluster_df['purity'], 3)
-        cluster_df['ingroup'] = round(cluster_df['ingroup'], 3)
+
+        cluster_df["harm"] = math.floor(cluster_df.harm*5)
+        cluster_df["fair"] = math.floor(cluster_df.fair*5)
+        cluster_df["ingroup"] = math.floor(cluster_df.ingroup*5)
+        cluster_df["auth"] = math.floor(cluster_df.auth*5)
+        cluster_df["purity"] = math.floor(cluster_df.purity*5)
+
+
         cluster_df['sex'] = round(cluster_df['sex'], 3)
         clusters.append(cluster_df)
 
