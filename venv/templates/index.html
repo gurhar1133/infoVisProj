@@ -1,71 +1,12 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/main.css">
 </head>
-<style>
-    a{
-        text-decoration: none;
-    }
-    .stats-table{
-        display:none;
-    }
-    .dawg:hover{
-       cursor:pointer;
-        background: lightcyan;
-    }
 
-    @keyframes fillout{
-    from {
-        transform: scaleX(0);
-        
-    }
-    to{
-        transform: scaleX(1);
-        
-    }
-}
-    h4:hover{
-        cursor: pointer;
-        
-        /* color: lightblue; */
-    }
-
-    .overview{
-        display: grid;
-        grid-template-columns: 25% 25% 25% 25%;
-    }
-
-    .overview-elem{
-        transform: scale(.7);
-        margin-top: -15%;
-        margin-bottom: -15%;
-    }
-
-    @media (max-width: 1400px) {
-        .overview{
-            display: grid;
-            grid-template-columns: 33% 33% 33%;
-        }
-    }
-
-    @media (max-width: 1000px) {
-        .overview{
-            display: grid;
-            grid-template-columns: 50% 50%;
-        }
-    }
-
-    @media (max-width: 800px) {
-        .overview{
-            display: grid;
-            grid-template-columns: 100%;
-        }
-    }
-
-</style>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-dark text-light">
         <div class="container">
-            <a href="/"><h1>Data Dogs</h1></a>
+            <h1>Data Dogs</h1>
             <a href="/compare"><h4>compare</h4></a>
             <a href="/cluster"><h4>cluster</h4></a>
         </div>
@@ -143,7 +84,7 @@
             <h2>{{ country[0] }}</h2>
             <div class="container stats-table">
                 <h4>Stats for {{ country[0] }}:</h4>
-                <table>
+                <table class="table">
                     <tr>
                         <th>Sex</th><th>harm</th><th>fair</th><th>ingroup</th><th>auth</th><th>purity</th>
                     </tr>

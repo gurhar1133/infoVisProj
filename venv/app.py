@@ -4,19 +4,26 @@ from proc import *
 from cluster import *
 app = Flask(__name__)
 
+
 ## TODO: ADD KEY TO OVERVIEW
 
-## TODO: ADD A README
+## TODO: Key and about encoding should mention how the data has been transformed
 
 ## TODO: ADD ABOUT ENCODING PAGE
 
-## TODO: ADD KEY TO CLUSTER PAGE
+## TODO: Extends base
 
-## TODO: Cluster page side by side cluster summary popups
+## TODO: Cluster and page side by side cluster summary popups
+
+## TODO: ADD KEY TO CLUSTER PAGE
 
 ## TODO: SLYLING UPDATES
 
 ## TODO: MAKE SURE SEX ENCODING IS CORRECT IN CLUSTER PAGE
+
+## TODO: ADD CUSTOM ENCODINGS
+
+
 
 def bin_sex(sex):
     if sex < 0:

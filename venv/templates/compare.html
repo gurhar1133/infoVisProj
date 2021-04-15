@@ -1,38 +1,12 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/main.css">
 </head>
-<style>
-    a{
-        text-decoration: none;
-    }
-    .stats-table{
-        display: flex;
-        justify-content: space-evenly;
-    }
-    .dawg:hover{
-       cursor:pointer;
-        background: lightcyan;
-    }
-
-    @keyframes fillout{
-    from {
-        transform: scaleX(0);
-        
-    }
-    to{
-        transform: scaleX(1);
-        
-    }
-}
-    h4:hover{
-        cursor: pointer;
-    }
-</style>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-dark text-light">
     <div class="container">
         <a href="/"><h1>Data Dogs</h1></a>
-        <a href="/compare"><h4>compare</h4></a>
+        <h4>compare</h4>
         <a href="/cluster"><h4>cluster</h4></a>
     </div>
 </nav>
@@ -76,13 +50,13 @@
     <!-- {% endif %} -->
 </div>
 
-<div class="container stats-table">
+<div class="container stats-table-compare">
 {% for country in data_obj %}
     {% if country[0] in data %}
 
 
-    <div class="card">
-        <table>
+    <div class="card compare-card">
+        <table class="table">
             <tr>
                 <th><h4>Stats for {{ country[0] }}:</h4></th>
             </tr>
