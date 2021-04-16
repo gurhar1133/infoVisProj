@@ -2,7 +2,7 @@
 
 
 
-![Doggies](doggies.png)
+![Doggies](doggo.png)
 
 ### Data dogs is a data visualization app using dog svg glyphs to represent multi dimensional data
 * This project was inspired by  https://shirleywu.studio/filmflowers/ & Chernoff Faces
