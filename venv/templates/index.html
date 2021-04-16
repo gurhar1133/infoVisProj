@@ -10,12 +10,12 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-dark text-light">
+    <nav class="navbar navbar-expand-lg shadow navbar-light bg-dark text-light">
         <div class="container">
-            <a href="/"><h1>Data Dogs</h1></a>
+            <a href="/"><h1 class="nav-elem">Data Dogs</h1></a>
             <h4>overview</h4>
-            <a href="/compare"><h4>compare</h4></a>
-            <a href="/cluster"><h4>cluster</h4></a>
+            <a href="/compare"><h4 class="nav-elem">compare</h4></a>
+            <a href="/cluster"><h4 class="nav-elem">cluster</h4></a>
         </div>
         
         
@@ -29,8 +29,8 @@
             
 
             <div class="">
-                <h1 class="text-center">Overview</h1>
-
+                <h1 style="margin-top: .8em;" class="text-center">Overview</h1>
+                    <p class='text-center'>Aggregates grouped by country and sex</p>
 
             <div class="mysticky">
                 <form action="/compare" method="POST" style="float: right;">
@@ -228,7 +228,7 @@ function show_stats(country){
     newnode = document.createElement('div');
     newnode.classList.add('card');
     newnode.classList.add('popup');
-    newnode.innerHTML += "<p onclick='clear_popups()' style='text-align:right;cursor:pointer; margin:0px; padding: 0px;'>x<p>"
+    newnode.innerHTML += "<p onclick='clear_popups()' class='x'>x<p>"
     newnode.innerHTML += nodeContent;
     newnode.style = 'padding: 20px; position: fixed; top: 33%; left: 60%; display: inline; background: white;';
     document.body.appendChild(newnode);

@@ -5,15 +5,13 @@ from cluster import *
 app = Flask(__name__)
 
 
-## TODO: Fix the xs
+## TODO: SLYLING UPDATES
+
+## TODO: Make javascript more modular
 
 ## TODO: Extends base
 
 ## TODO: Cluster and page side by side cluster summary popups
-
-## TODO: ADD KEY TO CLUSTER PAGE
-
-## TODO: SLYLING UPDATES
 
 ## TODO: MAKE SURE SEX ENCODING IS CORRECT IN CLUSTER PAGE
 

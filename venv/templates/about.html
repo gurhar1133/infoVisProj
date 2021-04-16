@@ -9,18 +9,18 @@
       </script>
 </head>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-dark text-light">
+<nav class="navbar shadow navbar-expand-lg navbar-light bg-dark text-light">
     <div class="container">
         <h1>Data Dogs</h1>
-        <a href="/overview"><h4>overview</h4></a>
-        <a href="/compare"><h4>compare</h4></a>
-        <a href="/cluster"><h4>cluster</h4></a>
+        <a href="/overview"><h4 class="nav-elem">overview</h4></a>
+        <a href="/compare"><h4 class="nav-elem">compare</h4></a>
+        <a href="/cluster"><h4 class="nav-elem">cluster</h4></a>
     </div>
 </nav>
 
 <div class="container">
 
-    <h1 class="fade-in">Welcome to datadogs!</h1>
+    <h1 style="margin-top:1em;" class="fade-in">Welcome to datadogs!</h1>
     <div class="card-grid">
         <div class="first">
             <div class="card shadow about-card">
@@ -42,12 +42,14 @@
         <div class="third">
             <div class="card shadow about-card third">
                 <h4>Processing:</h4>
-                <p>I've Z-standardized, mulitplied by ten and floored the data</p>
-                <code>
-                    standardScalar.fit_transform(df)
+                <p>I've Z-standardized, mulitplied by ten and floored the data. In the overview, data objects are aggregated by sex and country</p>
+                eg:<code>
+                    scaler = preprocessing.StandardScaler().fit(df)<br>
+                    df = scaler.transform(df)
                     <br>...<br>
                     df.col = df.col.apply(lambda x: math.floor(x*10))
-                    <br>...
+                    <br>...<br>
+                    df.groupby(["country", "sex"]).mean()
                 </code>
             </div>
         </div>
