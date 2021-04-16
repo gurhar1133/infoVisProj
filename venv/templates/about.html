@@ -24,16 +24,16 @@
     <div class="card-grid">
         <div class="first">
             <div class="card shadow about-card">
-                <h4>Features:</h4>
-                <div class="list-group">
+                <h4 style="padding-bottom: 1em;">Features:</h4>
+                <div style="padding-bottom: 1.5em;" class="list-group m-2">
                     <div class="list-group-item list-group-item-action p-2">
-                        <a href="/overview">Overview of country and sex aggregates</a>
+                        <a class="h5" href="/overview">Overview of country and sex aggregates</a>
                     </div>
                     <div class="list-group-item list-group-item-action p-2">
-                        <a href="/compare">Side by side comparisons</a>
+                        <a class="h5" href="/compare">Side by side comparisons</a>
                     </div>
                     <div class="list-group-item list-group-item-action p-2">
-                        <a href="/cluster">Identify and Compare Clusters</a>
+                        <a class="h5" href="/cluster">Identify and Compare Clusters</a>
                     </div>
                 </div>
             </div>
@@ -56,8 +56,9 @@
         
         <div class="second">
             <div class="card shadow about-card">
-                <img class="car-img-top" src="../static/dataframe.png" alt="dataframe">
                 <h4>The Data:</h4>
+                <img class="car-img-top" src="../static/dataframe.png" alt="dataframe">
+                
                 <p>Data comes from <a href="https://www.kaggle.com/tunguz">Bojan Tunguz's</a> curation of 
                     <a href="https://www.kaggle.com/tunguz/sex-differences-in-moral-judgements-67-countries">
                         moral foundations data on kaggle.
@@ -68,6 +69,7 @@
         
         <div class="fourth">
             <div class="card shadow about-card">
+                <h5>Encoding/Mappings</h5>
                 <img class="card-img-top" src="../static/sample.png" alt="dataframe">
                 
                 <!-- const widthVar = 1.5*purity;
@@ -78,7 +80,7 @@
             const harmvar = harm;
             if (sex == "f"){sex = "red"}else{sex="blue"} -->
             
-                <h5>Encoding/Mappings</h5>
+                
                 <div class="list-group">
                     <div class="list-group-item "> <strong> Purity </strong> $\Rightarrow$ Dog head width/convexness</div>
                     <div class="list-group-item "> <strong> Fairness </strong>  $\Rightarrow$ Dog head height/convexness</div>
