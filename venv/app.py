@@ -5,11 +5,9 @@ from cluster import *
 app = Flask(__name__)
 
 
-## TODO: ADD KEY TO OVERVIEW
+## TODO: Fix the xs
 
-## TODO: Key and about encoding should mention how the data has been transformed
-
-## TODO: ADD ABOUT ENCODING PAGE
+## TODO: Blink effect when zoom to country in overview
 
 ## TODO: Extends base
 
@@ -31,13 +29,17 @@ def bin_sex(sex):
     else:
         return "Male dominant"
 
-@app.route("/", methods=['GET', 'POST'])
+@app.route("/overview", methods=['GET', 'POST'])
 def index():
     
     data_obj = pre_proc_data()
 
     if request.method == 'GET':
         return render_template("index.html", data_obj=data_obj)
+
+@app.route('/')
+def about():
+    return render_template('about.html')
 
 @app.route("/cluster", methods=["GET", "POST"])
 def cluster(k=None):

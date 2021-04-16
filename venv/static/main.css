@@ -10,9 +10,110 @@
     }
 }
 
+@keyframes fadeIn{
+    from {
+        opacity: 0;
+        
+    }
+    to{
+        opacity: 1;
+        
+    }
+}
+
+@keyframes fade-in-and-out{
+    0% {
+        opacity: 0;
+        
+    }
+    20% {
+        opacity: 1;
+    }
+    40% {
+        opacity: 0;
+        
+    }
+    60% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 0;
+        
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes filloutY{
+    from {
+        transform: scaleY(0);
+        
+    }
+    to{
+        transform: scaleY(1);
+        
+    }
+}
+
+@keyframes slideLeft {
+    from {
+      transform: translateX(100%);
+      
+    }
+  
+    to {
+      transform: translateX(0%);
+     
+    }
+  }
+
+  @keyframes slideRight {
+    from {
+        transform: translateX(-100%);
+        
+      }
+    
+      to {
+        transform: translateX(0%);
+       
+      }
+  }
+
 a{
     text-decoration: none;
 }
+body{
+    position: relative;
+}
+
+select:hover{
+    cursor:pointer;
+}
+
+code{
+    margin: 10px;
+    padding: 10px;
+    background-color: lightgray;
+}
+
+.even{
+    animation: slideRight .8s ease-in;
+}
+
+.odd{
+    animation: slideLeft .8s ease-in;
+}
+
+.about-card{
+    max-width: 90%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 3%;
+    padding: 2em;
+    max-height:min-content;
+}
+
 .stats-table-compare{
     display: flex;
     justify-content: space-evenly;
@@ -25,6 +126,10 @@ td{
 
 th{
     margin: 4%;
+}
+
+.mysticky {
+    z-index: 10;
 }
 
 .compare-card{
@@ -41,9 +146,24 @@ h4:hover{
 
 .stats-table{
     display:none;
+    z-index: 10000;
+    margin-top: 2em;
 }
 
+.key{
+    /* z-index: 100; */
+    width: 60%;
+    max-width: 500px;
+    margin-top: 5em;
+    margin-left: -.5em;
+}
 
+.key-button{
+    z-index: 1000;
+    margin: .3em;
+    margin-top: 2em;
+    margin-left: -.5em;
+}
 
 .overview{
     display: grid;
@@ -55,16 +175,41 @@ h4:hover{
     grid-template-columns: 50% 50%
 }
 
+.folded{
+    transform: scaleY(0);
+    z-index: -100;
+}
+
+.unfold{
+    animation: filloutY .3s ease-in;
+    z-index: 1000;
+}
+
 .overview-elem{
     transform: scale(.7);
     margin-top: -15%;
     margin-bottom: -15%;
 }
 
+.fade-in{
+    animation: fadeIn 3s ease-out;
+}
+
+.blink{
+    animation: fade-in-and-out 3s linear; 
+}
+
 @media (max-width: 1400px) {
     .overview{
         display: grid;
         grid-template-columns: 33% 33% 33%;
+    }
+}
+
+@media (min-width: 900px){
+    .card-grid{
+        display: grid;
+        grid-template-columns: 50% 50%;
     }
 }
 

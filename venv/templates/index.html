@@ -1,12 +1,19 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/main.css">
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+      </script>
+      <script type="text/javascript"
+        src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+      </script>
 </head>
 
-
+<body>
     <nav class="navbar navbar-expand-lg navbar-light bg-dark text-light">
         <div class="container">
-            <h1>Data Dogs</h1>
+            <a href="/"><h1>Data Dogs</h1></a>
+            <h4>overview</h4>
             <a href="/compare"><h4>compare</h4></a>
             <a href="/cluster"><h4>cluster</h4></a>
         </div>
@@ -17,17 +24,16 @@
     <div class="container"></div>
     <div class="jumbotron">
         <div class="container">
-            <h2>About:</h2>
-            <ul>
-                <li>The dataset</li>
-                <li>
-                    z-standardized measures
-                </li>
-                <li>Blah blah blah</li>
-            </ul>
 
-            <div class="d-flex m-2">
-                <form action="/compare" method="POST">
+            
+            
+
+            <div class="">
+                <h1 class="text-center">Overview</h1>
+
+
+            <div class="mysticky">
+                <form action="/compare" method="POST" style="float: right;">
                     <h5>Two country comparison: </h5>
                     <select name="compareA" id="compareA" onchange="">
                         <option value="none"> --- </option>
@@ -53,22 +59,45 @@
 
                     <!-- <button onclick='compare()' type="button" class="btn btn-dark">Compare</button> -->
                 </form>
+                <div class="float-left">
+                    <h5>Select country to zoom: </h5>
+                    <select name="country" id="country" onchange="if(this.selectedIndex!=0)
+                    self.location=this.options[this.selectedIndex].value;
+                    console.log(typeof(this.options[this.selectedIndex].value));
+                    makeBlink(this.options[this.selectedIndex].value)">
+                        <option value="none"> --- </option>
+                        {% for country in data_obj %}
+                            
+                            <option value="#{{ country[0] }}">{{ country[0] }}</option>
+                            
+
+                        {% endfor %}
+        
+                    </select>
+                </div>
+
             </div>
 
-            <div class="">
-                <h1>Overview</h1>
                 
-                Select country: <select name="country" id="country" onchange="if(this.selectedIndex!=0)
-                self.location=this.options[this.selectedIndex].value">
-                    <option value="none"> --- </option>
-                    {% for country in data_obj %}
-                        
-                        <option value="#{{ country[0] }}">{{ country[0] }}</option>
-                        
+            <button class="btn btn-dark key-button position-fixed" onclick="openKey()">Key</button>
+            <div class="position-fixed key shaddow-sm">
+                
+                <div class="card shadow about-card folded">
+                
+                <div class="list-group">
+                    <div class="list-group-item "> <strong> Purity </strong> $\Rightarrow$ Dog head width/convexness</div>
+                    <div class="list-group-item "> <strong> Fairness </strong>  $\Rightarrow$ Dog head height/convexness</div>
+                    <div class="list-group-item "> <strong> Harm </strong>  $\Rightarrow$ Dog eyebrow orientation</div>
+                    <div class="list-group-item "> <strong> Ingroup </strong>  $\Rightarrow$ Ear orientation and length</div>
+                    <div class="list-group-item "> <strong> Authority </strong>  $\Rightarrow$ Smile/Frown intensity</div>
+                    <div class="list-group-item "> <strong> Sex </strong> $\Rightarrow$ Dog color</div>
+                </div>
+            
+            </div>
 
-                    {% endfor %}
-    
-                </select>
+            </div>
+
+                
             </div>
             
         </div>
@@ -80,11 +109,11 @@
     {% for country in data_obj %}
     
     
-        <div class="container  overview-elem" id={{ country[0] }}>
+        <div class="container shadow overview-elem" id={{ country[0] }}>
             <h2>{{ country[0] }}</h2>
-            <div class="container stats-table">
+            <div class="container shadow stats-table">
                 <h4>Stats for {{ country[0] }}:</h4>
-                <table class="table">
+                <table class="table shadow-sm">
                     <tr>
                         <th>Sex</th><th>harm</th><th>fair</th><th>ingroup</th><th>auth</th><th>purity</th>
                     </tr>
@@ -109,13 +138,13 @@
             
     
     
-            <div class="">
-                <div onclick="show_stats( {{ country[0] }} )" class="card dawg container m-0" id={{country[0] + "-f-glyph"}} style="display:grid;grid-template-rows:60% 40%; grid-template-columns:60% 40%;height:full;">
+            <div class="p-1 m-1">
+                <div onclick="show_stats( {{ country[0] }} )" class=" dawg shadow-sm container m-0" id={{country[0] + "-f-glyph"}} style="display:grid;grid-template-rows:60% 40%; grid-template-columns:60% 40%;height:full;">
                     <h4>Female:</h4>
                 </div>
                     
                 
-                <div onclick="show_stats( {{ country[0] }} )" class="card dawg container m-0" id={{country[0] + "-m-glyph"}} style="display:grid;grid-template-rows:60% 40%; grid-template-columns:60% 40%;height:full;">
+                <div onclick="show_stats( {{ country[0] }} )" class=" dawg shadow-sm container m-0" id={{country[0] + "-m-glyph"}} style="display:grid;grid-template-rows:60% 40%; grid-template-columns:60% 40%;height:full;">
                     <h4>Male:</h4>
                 </div>
             </div>
@@ -128,6 +157,10 @@
     </div>
     
     </div>
+    
+</body>
+
+    
 
 <!-- <script src="../static/draw.js"></script> -->
 <script>
@@ -144,6 +177,31 @@
 //     }
     
 // }
+function makeBlink(id){
+    console.log(id, "in makeBlink")
+    var elem = document.getElementById(id.slice(1, id.length));
+    console.log("makeBlink() call elem: ", elem);
+    elem.classList.add('blink');
+    setTimeout(e=>{
+        elem.classList.remove('blink');
+    }, 4000);
+}
+
+function openKey(){
+    var par = document.querySelector('.key')
+    var key = document.querySelector(".folded");
+    if (key == null){
+        key = document.querySelector(".unfold");
+        key.classList.remove("unfold");
+        par.style.zIndex = "-10";
+        key.classList.add("folded");
+    } else {
+        key.classList.remove("folded");
+        par.style.zIndex = "1000";
+        key.classList.add("unfold");
+    }
+    
+}
 
 function clear_popups(){
     if (document.body.getElementsByClassName('popup')[0] != null){
@@ -172,7 +230,7 @@ function show_stats(country){
     newnode.classList.add('popup');
     newnode.innerHTML += "<p onclick='clear_popups()' style='text-align:right;cursor:pointer; margin:0px; padding: 0px;'>x<p>"
     newnode.innerHTML += nodeContent;
-    newnode.style = 'padding: 20px; position: fixed; top: 10%; left: 30%; display: inline; background: white;';
+    newnode.style = 'padding: 20px; position: fixed; top: 33%; left: 60%; display: inline; background: white;';
     document.body.appendChild(newnode);
     newnode.style.animation = 'fillout .2s linear';
 }

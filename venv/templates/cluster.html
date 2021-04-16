@@ -7,15 +7,16 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-dark text-light">
         <div class="container">
             <a href="/"><h1>Data Dogs</h1></a>
+            <a href="/overview"><h4>overview</h4></a>
             <a href="/compare"><h4>compare</h4></a>
             <h4>cluster</h4>
         </div>
     </nav>
     
     <div class="container">
-        <h3>Hello cluster</h3>
     
-        <form action="/cluster" method="POST">
+        <form action="/cluster" method="POST" class="text-center">
+            <h3>Hello cluster</h3>
             <h5>Select k clusters: </h5>
             <select name="clusters" id="clusters" onchange="">
                 <option value="none"> --- </option>
@@ -41,12 +42,12 @@
     </div>
     <div id="clustercontainer">
         {% for cluster in clusters %}
-        <div class="container" id={{ str(cluster['Cluster']) }}>
+        <div class="container " id={{ str(cluster['Cluster']) }}>
             
-            <div class="container stats-table">
+            <div class="container shadow stats-table">
                 <h4>Stats for cluster {{ int(cluster['Cluster']) }}:</h4>
                 <h5> Top countries:  {{ cluster['top_countries'][0] }} {{ cluster['top_countries'][1] }} {{ cluster['top_countries'][2] }} {{ cluster['top_countries'][3] }} </h5>
-                <table class="table">
+                <table class="table shadow-sm">
                     <tr>
                         <th>harm</th><th>fair</th><th>ingroup</th><th>auth</th><th>purity</th><th>sex</th>
                     </tr>
@@ -66,7 +67,7 @@
         
         
             <div class="d-flex">
-                <div onclick="show_stats( {{ str(cluster['Cluster']) }} )" class="card dawg container m-2" id={{ str(cluster['Cluster']) + "-glyph"}} style="display:grid;grid-template-rows:60% 40%; grid-template-columns:60% 40%;height:full;">
+                <div onclick="show_stats( {{ str(cluster['Cluster']) }} )" class="card dawg shadow-sm container m-2" id={{ str(cluster['Cluster']) + "-glyph"}} style="display:grid;grid-template-rows:60% 40%; grid-template-columns:60% 40%;height:full;">
                     <h4>cluster representative {{str(int(cluster['Cluster']))}}</h4>
                 </div>
             </div>

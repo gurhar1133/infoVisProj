@@ -5,7 +5,9 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-dark text-light">
     <div class="container">
+        
         <a href="/"><h1>Data Dogs</h1></a>
+        <a href="/overview"><h4>overview</h4></a>
         <h4>compare</h4>
         <a href="/cluster"><h4>cluster</h4></a>
     </div>
@@ -55,8 +57,8 @@
     {% if country[0] in data %}
 
 
-    <div class="card compare-card">
-        <table class="table">
+    <div class="card shadow-sm compare-card">
+        <table class="table shadow-sm">
             <tr>
                 <th><h4>Stats for {{ country[0] }}:</h4></th>
             </tr>
@@ -98,12 +100,12 @@
     
     
         <div class="d-flex">
-            <div class="card dawg container m-2" id={{country[0] + "-f-glyph"}} style="display:grid;grid-template-rows:60% 40%; grid-template-columns:60% 40%;height:full;">
+            <div class="card dawg shadow container m-2" id={{country[0] + "-f-glyph"}} style="display:grid;grid-template-rows:60% 40%; grid-template-columns:60% 40%;height:full;">
                 <h4>Female:</h4>
             </div>
                 
             
-            <div class="card dawg container m-2" id={{country[0] + "-m-glyph"}} style="display:grid;grid-template-rows:60% 40%; grid-template-columns:60% 40%;height:full;">
+            <div class="card shadow dawg container m-2" id={{country[0] + "-m-glyph"}} style="display:grid;grid-template-rows:60% 40%; grid-template-columns:60% 40%;height:full;">
                 <h4>Male:</h4>
             </div>
         </div>
