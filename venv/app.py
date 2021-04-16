@@ -7,8 +7,6 @@ app = Flask(__name__)
 
 ## TODO: Fix the xs
 
-## TODO: Blink effect when zoom to country in overview
-
 ## TODO: Extends base
 
 ## TODO: Cluster and page side by side cluster summary popups
