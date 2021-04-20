@@ -1,0 +1,239 @@
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/main.css">
+
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+      </script>
+      <script type="text/javascript"
+        src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+      </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light shadow bg-dark text-light">
+        <div class="container">
+            <a href="/"><h1 class="nav-elem">Data Dogs</h1></a>
+            <a href="/overview"><h4 class="nav-elem">overview</h4></a>
+            <a href="/compare"><h4 class="nav-elem">compare</h4></a>
+            <h4>cluster</h4>
+        </div>
+    </nav>
+    
+    <div class="container">
+
+        <button class="btn btn-dark key-button position-fixed" onclick="openKey()">Key</button>
+            <div class="position-fixed key shaddow-sm">
+                
+                <div class="card shadow about-card folded">
+                
+                <div class="list-group">
+                    <div class="list-group-item "> <strong> Top Countries </strong> -> Top countries within a cluster relative to their prevlance in the dataset</div>
+                    <div class="list-group-item "> <strong> Purity </strong> -> Dog head width/convexness</div>
+                    <div class="list-group-item "> <strong> Fairness </strong>  -> Dog head height/convexness</div>
+                    <div class="list-group-item "> <strong> Harm </strong>  -> Dog eyebrow orientation</div>
+                    <div class="list-group-item "> <strong> Ingroup </strong>  -> Ear orientation and length</div>
+                    <div class="list-group-item "> <strong> Authority </strong>  -> Smile/Frown intensity</div>
+                    <div class="list-group-item "> <strong> Sex </strong> -> Dog color. Continuous diverging color from blue/male to red/female based on predominance of gender within a cluster</div>
+                </div>
+            
+            </div>
+
+            </div>
+    
+        <form  action="/cluster" method="POST" class="text-center">
+            <!-- <h3>Clustering</h3> -->
+            <h5>Select number of clusters you would like to generate: </h5>
+            <select name="clusters" id="clusters" onchange="">
+                <!-- <option value="none"> --- </option> -->
+                {% for i in range(2,13) %}
+                    
+                    <option value="{{ i }}">{{ i }}</option>
+                    
+    
+                {% endfor %}
+    
+            </select>
+            
+            <input class="btn btn-dark" type="submit" value="Cluster">
+            
+            <!-- {% for cluster in clusters %}
+                <p> {{ cluster.index }} </p>
+                {% for field in cluster %}
+                    <p> {{ field }} </p>
+                {% endfor %}
+            {% endfor %} -->
+    </div>
+    <div class="colortest">
+    </div>
+    <div id="clustercontainer">
+        {% for cluster in clusters %}
+        <div class="container " id={{ str(cluster['Cluster']) }}>
+            
+            <div class="container shadow stats-table">
+                <h4>Stats for cluster {{ int(cluster['Cluster']) + 1 }}:</h4>
+                <h5> Top countries:  {{ cluster['top_countries'][0] }} {{ cluster['top_countries'][1] }} {{ cluster['top_countries'][2] }} {{ cluster['top_countries'][3] }} </h5>
+                <table class="table shadow-sm">
+                    <tr>
+                        <th>harm</th><th>fair</th><th>ingroup</th><th>auth</th><th>purity</th><th>sex</th>
+                    </tr>
+                    <tr>
+                        
+                        <td id={{ str(cluster['Cluster']) + "-harm" }}>{{ cluster['harm'] }}</td>
+                        <td id={{ str(cluster['Cluster']) + "-fair" }}>{{ cluster['fair'] }}</td>
+                        <td id={{ str(cluster['Cluster']) + "-ingroup" }}>{{ cluster['ingroup'] }}</td>
+                        <td id={{ str(cluster['Cluster']) + "-auth" }}>{{ cluster['auth']}}</td>
+                        <td id={{ str(cluster['Cluster']) + "-purity" }}>{{ cluster['purity'] }}</td>
+                        <td id={{ str(cluster['Cluster']) + "sex" }}>{{ bin_sex(cluster['sex']) }}</td>
+                        <td style="display: none;" id={{ str(cluster['Cluster']) + "-sex" }}>{{ cluster['sex'] }}</td>
+                    </tr>
+                </table> 
+            </div>
+            
+        
+        
+            <div class="d-flex">
+                <div onclick="show_stats( {{ str(cluster['Cluster']) }} )" class="card dawg shadow-sm container m-2" id={{ str(cluster['Cluster']) + "-glyph"}} style="display:grid;grid-template-rows:60% 40%; grid-template-columns:60% 40%;height:full;">
+                    <h4>cluster representative {{str(int(cluster['Cluster']) + 1)}}</h4>
+                </div>
+            </div>
+            
+                
+        
+        </div>
+        {% endfor %}
+
+    </div> 
+    
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    
+</body>
+
+<script>
+var color = d3.scaleSequential(d3.interpolateSpectral);
+selections = document.getElementById("clustercontainer").children;
+clusters = []
+for (selection of selections){
+    clusters.push(selection.id)
+}
+
+function openKey(){
+    var par = document.querySelector('.key')
+    var key = document.querySelector(".folded");
+    if (key == null){
+        key = document.querySelector(".unfold");
+        key.classList.remove("unfold");
+        par.style.zIndex = "-10";
+        key.classList.add("folded");
+    } else {
+        key.classList.remove("folded");
+        par.style.zIndex = "1000";
+        key.classList.add("unfold");
+    }
+    
+}
+
+function clear_popups(){
+    if (document.body.getElementsByClassName('popup')[0] != null){
+        popup = document.body.getElementsByClassName('popup');
+        document.body.removeChild(popup[0]);
+    }
+}
+
+function show_stats(clusterId){
+    clear_popups();
+    id = String(clusterId) + ".0";
+    
+    var data = document.getElementById(id)
+    console.log(data.children);
+    nodeContent = data.children[0].innerHTML;
+    console.log(nodeContent);
+    newnode = document.createElement('div');
+    newnode.classList.add('card');
+    newnode.classList.add('popup');
+    newnode.innerHTML += "<p onclick='clear_popups()' class='x'>x<p>"
+    newnode.innerHTML += nodeContent;
+    newnode.style = 'padding: 20px; position: fixed; top: 30%; left: 50%; display: inline; background: white;';
+    document.body.appendChild(newnode);
+    newnode.style.animation = 'fillout .2s linear';
+}
+
+
+function gen_html (harm, fair, auth, ingroup, purity, sex) {
+    const widthVar = 1.5*purity;
+    const heightVar = 5 + 2.5*fair;
+    const earHieght = ingroup == 0 ? 7 : 8*(ingroup);
+
+    const happiness = -2.5*auth;
+    const harmvar = harm;
+    sex = color(sex + .5);
+
+    newpath = `
+        M 0,0 
+        C ${-widthVar},30 ${-widthVar},50 0,80 
+        C 30,${80 + heightVar} 50,${80 + heightVar} 80,80 
+        C ${80 + widthVar},50 ${80 + widthVar},30 80,0 
+        C 50,${-heightVar} 30,${-heightVar} 0,0 
+
+        M 0,80 
+        C 0,${80 + earHieght/3} 0,${80 + 2*(earHieght/3)} 10,${ 80 + earHieght} 
+        C 20,${80 + 2*(earHieght/3)} 20,${80 + (earHieght/3)} 30,${80 - heightVar/(earHieght + 1)} 
+
+        M 80,80 
+
+        C 80,${80 + earHieght/3} 80,${80 + 2*(earHieght/3)} 70,${80 + earHieght}
+        C 60,${80 + 2*(earHieght/3)} 60,${80 + (earHieght/3)} 50,${80 - heightVar/(earHieght + 1)}
+
+        M 20,50
+        C 23,55 28,55 30,50
+        C 28,45 23,45 20,50
+
+        M 60,50
+        C 58,55 53,55 50,50
+        C 53,45 58,45 60,50
+
+        M 45,40
+        L 35,40
+        L 40,35
+        L 45,40
+
+        M 65,25
+        C 50,${25 - happiness} 30,${25 - happiness} 15,25
+
+        M 30,60
+        L 15,${60 - harmvar}
+
+        M 50,60
+        L 65,${60 - harmvar}
+    `
+
+    
+    return `<svg style="grid-area:2/2;overflow:visible;margin-top: 15px;" ><path fill="white" stroke="${sex}" stroke-width="3" d="${newpath}" transform="rotate(180)">
+</svg>`;
+}
+
+function draw_clusters(clusters){
+   
+        clusters.forEach(elem => {
+            console.log("functional")
+            var glyph = document.getElementById(`${elem}-glyph`);
+           
+            var data = {
+                "harm": Number(document.getElementById(`${elem}-harm`).innerText),
+                "fair": Number(document.getElementById(`${elem}-fair`).innerText),
+                "auth": Number(document.getElementById(`${elem}-auth`).innerText),
+                "ingroup": Number(document.getElementById(`${elem}-ingroup`).innerText),
+                "purity": Number(document.getElementById(`${elem}-purity`).innerText),
+                "sex": Number(document.getElementById(`${elem}-sex`).innerText)
+            }
+         
+            glyph.innerHTML += gen_html(data.harm, data.fair, data.auth, data.ingroup, data.purity, data.sex);
+        })
+   
+}
+
+draw_clusters(clusters)
+    
+</script>
+

@@ -1,0 +1,301 @@
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/main.css">
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+      </script>
+      <script type="text/javascript"
+        src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+      </script>
+</head>
+
+<nav class="navbar shadow navbar-expand-lg navbar-light bg-dark text-light">
+    <div class="container">
+        
+        <a href="/"><h1 class="nav-elem">Data Dogs</h1></a>
+        <a href="/overview" ><h4 class="nav-elem">overview</h4></a>
+        <h4>compare</h4>
+        <a href="/cluster"><h4 class="nav-elem">cluster</h4></a>
+    </div>
+</nav>
+
+<div class="container">
+    <h2>comparision</h2>
+
+    <button style="right: 10%;" class="btn btn-dark key-button position-fixed" onclick="openKey()">Key</button>
+            <div style="right: 5%;"  class="position-fixed key shaddow-sm">
+                
+                <div class="card shadow about-card folded">
+                
+                <div class="list-group">
+                    <div class="list-group-item "> <strong> Purity </strong> : Dog head width/convexness</div>
+                    <div class="list-group-item "> <strong> Fairness </strong>  : Dog head height/convexness</div>
+                    <div class="list-group-item "> <strong> Harm </strong> : Dog eyebrow orientation</div>
+                    <div class="list-group-item "> <strong> Ingroup </strong>  : Ear orientation and length</div>
+                    <div class="list-group-item "> <strong> Authority </strong>  : Smile/Frown intensity</div>
+                    <div class="list-group-item "> <strong> Sex </strong> : Dog color</div>
+                </div>
+            
+            </div>
+
+            </div>
+
+<p style="display: none;" id="a" >{{ data[0] }}</p>
+<p style="display: none;" id="b" >{{ data[1] }}</p>
+
+
+<div class="d-flex m-2">
+    <form action="/compare" method="POST">
+        <h5>Two country comparison: </h5>
+        <select name="compareA" id="compareA" onchange="">
+            <option value="none"> --- </option>
+            {% for country in data_obj %}
+                
+                <option value="{{ country[0] }}">{{ country[0] }}</option>
+                
+
+            {% endfor %}
+
+        </select>
+        <select name="compareB" id="compareB" onchange="">
+            <option value="none"> --- </option>
+            {% for country in data_obj %}
+                
+                <option value="{{ country[0] }}">{{ country[0] }}</option>
+                
+
+            {% endfor %}
+
+        </select>
+        <input class="btn btn-dark" type="submit" value="Compare">
+
+        <!-- <button onclick='compare()' type="button" class="btn btn-dark">Compare</button> -->
+    </form>
+    <!-- {% if selections %} -->
+       
+    <!-- {% endif %} -->
+</div>
+
+<div class="container stats-table-compare">
+{% for country in data_obj %}
+    {% if country[0] in data %}
+
+
+    <div class="card shadow-sm compare-card">
+        <table class="table shadow-sm">
+            <tr>
+                <th><h4>Stats for {{ country[0] }}:</h4></th>
+            </tr>
+            <tr>
+                <th>Sex</th><th>harm</th><th>fair</th><th>ingroup</th><th>auth</th><th>purity</th>
+            </tr>
+            <tr>
+                <td>female</td>
+                <td id={{ country[0] + "-f-harm" }}>{{ country[1].loc["female", "harm"] }}</td>
+                <td id={{ country[0] + "-f-fair" }}>{{ country[1].loc["female", "fair"] }}</td>
+                <td id={{ country[0] + "-f-ingroup" }}>{{ country[1].loc["female", "ingroup"] }}</td>
+                <td id={{ country[0] + "-f-auth" }}>{{ country[1].loc["female", "auth"] }}</td>
+                <td id={{ country[0] + "-f-purity" }}>{{ country[1].loc["female", "purity"] }}</td>
+            </tr>
+            <tr>
+                <td>male</td>
+                <td id={{ country[0] + "-m-harm" }}>{{ country[1].loc["male", "harm"] }}</td>
+                <td id={{ country[0] + "-m-fair" }}>{{ country[1].loc["male", "fair"] }}</td>
+                <td id={{ country[0] + "-m-ingroup" }}>{{ country[1].loc["male", "ingroup"] }}</td>
+                <td id={{ country[0] + "-m-auth" }}>{{ country[1].loc["male", "auth"] }}</td>
+                <td id={{ country[0] + "-m-purity" }}>{{ country[1].loc["male", "purity"] }}</td>
+            </tr>
+        </table> 
+    </div>
+    
+
+
+{% endif %}
+{% endfor %}
+</div>
+
+{% for country in data_obj %}
+    {% if country[0] in data %}
+        
+ 
+    <div class="container" id={{ country[0] }}>
+        <h2>{{ country[0] }}</h2>
+        
+    
+    
+        <div class="d-flex">
+            <div class="card dawg shadow container m-2" id={{country[0] + "-f-glyph"}} style="display:grid;grid-template-rows:60% 40%; grid-template-columns:60% 40%;height:full;">
+                <h4>Female:</h4>
+            </div>
+                
+            
+            <div class="card shadow dawg container m-2" id={{country[0] + "-m-glyph"}} style="display:grid;grid-template-rows:60% 40%; grid-template-columns:60% 40%;height:full;">
+                <h4>Male:</h4>
+            </div>
+        </div>
+        
+            
+    
+    </div>
+    
+
+  
+
+{% endif %}
+{% endfor %}
+
+</div>
+
+
+<script>
+selections = [document.getElementById("a").textContent, document.getElementById("b").textContent];
+
+function openKey(){
+    var par = document.querySelector('.key')
+    var key = document.querySelector(".folded");
+    if (key == null){
+        key = document.querySelector(".unfold");
+        key.classList.remove("unfold");
+        par.style.zIndex = "-10";
+        key.classList.add("folded");
+    } else {
+        key.classList.remove("folded");
+        par.style.zIndex = "1000";
+        key.classList.add("unfold");
+    }
+    
+}
+// function show_stats(country){
+//     clear_popups();
+//     console.log(country.children[1]);
+//     nodeContent = country.children[1].innerHTML;
+//     newnode = document.createElement('div');
+//     newnode.classList.add('card');
+//     newnode.classList.add('popup');
+//     newnode.innerHTML += "<p onclick='clear_popups()' style='text-align:right;cursor:pointer; margin:0px; padding: 0px;'>x<p>"
+//     newnode.innerHTML += nodeContent;
+//     newnode.style = 'padding: 20px; position: fixed; top: 10%; left: 30%; display: inline; background: white;';
+//     document.body.appendChild(newnode);
+//     newnode.style.animation = 'fillout .2s linear';
+// }
+
+// function clear_popups(){
+//     if (document.body.getElementsByClassName('popup')[0] != null){
+//         popup = document.body.getElementsByClassName('popup');
+//         // console.log(popup[0]);
+//         document.body.removeChild(popup[0]);
+//     }
+// }
+
+function gen_html (harm, fair, auth, ingroup, purity, sex) {
+    const widthVar = 1.5*purity;
+    const heightVar = 5 + 2.5*fair;
+    const earHieght = ingroup == 0 ? 7 : 8*(ingroup);
+
+    const happiness = -2.5*auth;
+    const harmvar = harm;
+    if (sex == "f"){sex = "pink"}else{sex="blue"}
+
+    newpath = `
+        M 0,0 
+        C ${-widthVar},30 ${-widthVar},50 0,80 
+        C 30,${80 + heightVar} 50,${80 + heightVar} 80,80 
+        C ${80 + widthVar},50 ${80 + widthVar},30 80,0 
+        C 50,${-heightVar} 30,${-heightVar} 0,0 
+
+        M 0,80 
+        C 0,${80 + earHieght/3} 0,${80 + 2*(earHieght/3)} 10,${ 80 + earHieght} 
+        C 20,${80 + 2*(earHieght/3)} 20,${80 + (earHieght/3)} 30,${80 - heightVar/(earHieght + 1)} 
+
+        M 80,80 
+
+        C 80,${80 + earHieght/3} 80,${80 + 2*(earHieght/3)} 70,${80 + earHieght}
+        C 60,${80 + 2*(earHieght/3)} 60,${80 + (earHieght/3)} 50,${80 - heightVar/(earHieght + 1)}
+
+        M 20,50
+        C 23,55 28,55 30,50
+        C 28,45 23,45 20,50
+
+        M 60,50
+        C 58,55 53,55 50,50
+        C 53,45 58,45 60,50
+
+        M 45,40
+        L 35,40
+        L 40,35
+        L 45,40
+
+        M 65,25
+        C 50,${25 - happiness} 30,${25 - happiness} 15,25
+
+        M 30,60
+        L 15,${60 - harmvar}
+
+        M 50,60
+        L 65,${60 - harmvar}
+    `
+
+    
+    return `<svg style="grid-area:2/2;overflow:visible;" ><path fill="white" stroke="${sex}" stroke-width="3" d="${newpath}" transform="rotate(180)">
+</svg>`;
+}
+
+function draw_selection(countries){
+    if (!document.getElementById(`${countries[0]}-f-glyph`)){
+        return;
+    }
+    else {
+        countries.forEach(elem => {
+            console.log("functional")
+            var glyphF = document.getElementById(`${elem}-f-glyph`);
+            var glyphM = document.getElementById(`${elem}-m-glyph`);
+            // console.log(glyphF);
+            var f_data = {
+                "harm": Number(document.getElementById(`${elem}-f-harm`).innerText),
+                "fair": Number(document.getElementById(`${elem}-f-fair`).innerText),
+                "auth": Number(document.getElementById(`${elem}-f-auth`).innerText),
+                "ingroup": Number(document.getElementById(`${elem}-f-ingroup`).innerText),
+                "purity": Number(document.getElementById(`${elem}-f-purity`).innerText)
+            }
+            // console.log("f_data",f_data);
+            var m_data = {
+                "harm": Number(document.getElementById(`${elem}-m-harm`).innerText),
+                "fair": Number(document.getElementById(`${elem}-m-fair`).innerText),
+                "auth": Number(document.getElementById(`${elem}-m-auth`).innerText),
+                "ingroup": Number(document.getElementById(`${elem}-m-ingroup`).innerText),
+                "purity": Number(document.getElementById(`${elem}-m-purity`).innerText)
+            }
+            // console.log(countries[i])
+            glyphF.innerHTML += gen_html(f_data.harm, f_data.fair, f_data.auth, f_data.ingroup, f_data.purity,"f");
+            glyphM.innerHTML += gen_html(m_data.harm, m_data.fair, m_data.auth, m_data.ingroup, m_data.purity,"m");
+        })
+    //     for (var i = 0; i < countries.length; i++) {
+        
+    //     var glyphF = document.getElementById(`${countries[i]}-f-glyph`);
+    //     var glyphM = document.getElementById(`${countries[i]}-m-glyph`);
+    //     console.log(glyphF);
+    //     var f_data = {
+    //         "harm": Number(document.getElementById(`${countries[i]}-f-harm`).innerText),
+    //         "fair": Number(document.getElementById(`${countries[i]}-f-fair`).innerText),
+    //         "auth": Number(document.getElementById(`${countries[i]}-f-auth`).innerText),
+    //         "ingroup": Number(document.getElementById(`${countries[i]}-f-ingroup`).innerText),
+    //         "purity": Number(document.getElementById(`${countries[i]}-f-purity`).innerText)
+    //     }
+    //     console.log("f_data",f_data);
+    //     var m_data = {
+    //         "harm": Number(document.getElementById(`${countries[i]}-m-harm`).innerText),
+    //         "fair": Number(document.getElementById(`${countries[i]}-m-fair`).innerText),
+    //         "auth": Number(document.getElementById(`${countries[i]}-m-auth`).innerText),
+    //         "ingroup": Number(document.getElementById(`${countries[i]}-m-ingroup`).innerText),
+    //         "purity": Number(document.getElementById(`${countries[i]}-m-purity`).innerText)
+    //     }
+    //     console.log(countries[i])
+    //     glyphF.innerHTML += gen_html(f_data.harm, f_data.fair, f_data.auth, f_data.ingroup, f_data.purity,"f");
+    //     glyphM.innerHTML += gen_html(m_data.harm, m_data.fair, m_data.auth, m_data.ingroup, m_data.purity,"m");
+    // }
+    }
+    
+}
+
+draw_selection(selections);
+</script>
